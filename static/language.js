@@ -1,57 +1,36 @@
-var Plotly = require('plotly.js-dist');
+var data = JSON.parse(JSON.stringify(data));
 
-// Load data from separate file
-var data = require('./data.js');
+// create arrays for the x and y data
+var xData = data.map(function (item) { return item.Number_Of_Jobs; });
+var yData = data.map(function (item) { return item.Rank; });
 
-// Create trace for scatter plot
-var trace = {
-  x: data['Number_Of_Jobs'],
-  y: data['Rank'],
-  text: data['Language'],
-  mode: 'markers',
+// create an array for the text labels
+var textLabels = data.map(function (item) { return item.Programming_Language; });
+
+// create the trace for the scatter plot
+var trace1 = {
+  x: xData,
+  y: yData,
+  mode: 'markers+text',
+  text: textLabels,
+  textposition: 'bottom center',
   marker: {
-    size: data['Number_Of_Jobs'],
-    sizemode: 'diameter',
-    sizeref: 0.05,
-    color: data['Language'],
-    colorscale: 'Viridis',
-    opacity: 0.7,
-    line: {
-      color: 'white',
-      width: 0.5
-    }
+    size: 12,
+    color: 'rgb(0, 153, 255)'
   }
 };
 
-// Define layout and configuration options
+// create the layout for the plot
 var layout = {
-  title: 'Language Popularity vs. Job Demand',
+  title: 'Language Popularity vs Job Demand',
   xaxis: {
-    title: 'Job Demand',
-    type: 'log'
+    title: 'Popularity'
   },
   yaxis: {
-    title: 'Language Popularity'
-  },
-  height: 600
+    title: 'Job Demand'
+  }
 };
 
-var config = {
-  responsive: true,
-  displayModeBar: true,
-  displaylogo: false,
-  modeBarButtonsToRemove: [
-    'sendDataToCloud',
-    'autoScale2d',
-    'resetScale2d',
-    'toggleSpikelines',
-    'hoverClosestCartesian',
-    'zoom2d',
-    'pan2d',
-    'select2d',
-    'lasso2d'
-  ]
-};
+// create the plot using Plotly.js
+Plotly.newPlot('plot', [trace1], layout);
 
-// Create plot and bind to HTML element with ID 'language-plot'
-Plotly.newPlot('language-plot', [trace], layout, config);
