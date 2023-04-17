@@ -1,36 +1,43 @@
-var data = JSON.parse(JSON.stringify(data));
+d3.json("static/data.json").then((importedData) => {
+  let data = importedData;
 
-// create arrays for the x and y data
-var xData = data.map(function (item) { return item.Number_Of_Jobs; });
-var yData = data.map(function (item) { return item.Rank; });
+  // Extract the programming language, rank, and number of jobs data
+  var language = data.map(function(d) { return d.Programming_Language; });
+  var rank = data.map(function(d) { return d.Rank; });
+  var jobs = data.map(function(d) { return d.Number_Of_Jobs; });
 
-// create an array for the text labels
-var textLabels = data.map(function (item) { return item.Programming_Language; });
+  // Define the trace
+  var trace = {
+    x: rank,
+    y: jobs,
+    mode: 'markers',
+    type: 'scatter',
+    text: language,
+    marker: {
+      color: jobs,
+      colorscale: 'Viridis',
+      size: 10,
+      showscale: true
+    }
+  };
 
-// create the trace for the scatter plot
-var trace1 = {
-  x: xData,
-  y: yData,
-  mode: 'markers+text',
-  text: textLabels,
-  textposition: 'bottom center',
-  marker: {
-    size: 12,
-    color: 'rgb(0, 153, 255)'
-  }
-};
+  // Define the layout
+  var layout = {
+    title: 'Programming Language Jobs vs. Rank',
+    xaxis: {
+      title: 'Rank'
+    },
+    yaxis: {
+      title: 'Number of Jobs'
+    },
+    margin: {
+      t: 60,
+      b: 60,
+      l: 60,
+      r: 60
+    }
+  };
 
-// create the layout for the plot
-var layout = {
-  title: 'Language Popularity vs Job Demand',
-  xaxis: {
-    title: 'Popularity'
-  },
-  yaxis: {
-    title: 'Job Demand'
-  }
-};
-
-// create the plot using Plotly.js
-Plotly.newPlot('plot', [trace1], layout);
-
+  // Plot the chart
+  Plotly.newPlot('plot', [trace], layout);
+});
