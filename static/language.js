@@ -1,43 +1,37 @@
-d3.json("static/data.json").then((importedData) => {
-  let data = importedData;
+fetch('data.json')
+		  .then(response => response.json())
+		  .then(data => {
+		  	// Filter and sort the data to get the top 10 programming languages based on rank
+		  	let topLanguages = data.filter(d => d.Rank <= 10)
+		  		.sort((a, b) => a.Rank - b.Rank);
 
-  // Extract the programming language, rank, and number of jobs data
-  var language = data.map(function(d) { return d.Programming_Language; });
-  var rank = data.map(function(d) { return d.Rank; });
-  var jobs = data.map(function(d) { return d.Number_Of_Jobs; });
+		  	// Extract the values from the filtered data
+		  	let programmingLanguages = topLanguages.map(d => d.Programming_Language);
+		  	let numberOfUsers = topLanguages.map(d => d.Number_Of_Users);
+		  	let numberOfJobs = topLanguages.map(d => d.Number_Of_Jobs);
 
-  // Define the trace
-  var trace = {
-    x: rank,
-    y: jobs,
-    mode: 'markers',
-    type: 'scatter',
-    text: language,
-    marker: {
-      color: jobs,
-      colorscale: 'Viridis',
-      size: 10,
-      showscale: true
-    }
-  };
+		  	// Create traces for the bar chart
+		  	let trace1 = {
+		  		x: programmingLanguages,
+		  		y: numberOfUsers,
+		  		name: 'Number of Users',
+		  		type: 'bar'
+		  	};
 
-  // Define the layout
-  var layout = {
-    title: 'Programming Language Jobs vs. Rank',
-    xaxis: {
-      title: 'Rank'
-    },
-    yaxis: {
-      title: 'Number of Jobs'
-    },
-    margin: {
-      t: 60,
-      b: 60,
-      l: 60,
-      r: 60
-    }
-  };
+		  	let trace2 = {
+		  		x: programmingLanguages,
+		  		y: numberOfJobs,
+		  		name: 'Number of Jobs',
+		  		type: 'bar'
+		  	};
 
-  // Plot the chart
-  Plotly.newPlot('plot', [trace], layout);
-});
+		  	// Create a layout for the plot
+		  	let layout = {
+		  		title: 'Top 10 Programming Languages',
+		  		barmode: 'group'
+		  	};
+
+		  	// Plot the data using Plotly
+		  	Plotly.newPlot('plot', [trace1, trace2], layout);
+		  })
+		  .catch(error => console.error(error));
