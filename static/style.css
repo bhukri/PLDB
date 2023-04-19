@@ -1,0 +1,73 @@
+#top_title {
+    align-content: center;
+    text-align: center;
+    background: linear-gradient(to bottom, #000000, #333333, #444444);
+    color: white;
+}
+
+#first_container {
+    display: flex;
+    margin-bottom: 100px;
+    margin-top: 50px;
+    color: white;
+}
+
+#first_text {
+    width: 1000px;
+}
+
+#second_header {
+    align-content: center;
+    text-align: center;
+    color: white;
+}
+
+#second_container {
+    background: linear-gradient(to bottom, #000000, #333333, #444444);
+    max-height: 100%;
+}
+
+#third_container {
+    align-content: center;
+    text-align: center;
+    background: linear-gradient(to bottom, #000000, #333333, #444444);
+    color: white;
+}
+
+#third_header {
+    align-content: center;
+    text-align: center;
+}
+
+#plot {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    padding-bottom: 80px;
+    max-width: 1400px;
+}
+
+#chart-users {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    padding-bottom: 80px;
+    max-width: 1400px;
+}
+
+#chart-jobs {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    padding-bottom: 80px;
+    max-width: 1400px;
+}
+
+img {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background: linear-gradient(to bottom, #000000, #333333, #444444);
+}

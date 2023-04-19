@@ -1,54 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Interactive Visualization with Plotly</title>
-	<!-- Load Plotly.js from CDN -->
+	<meta charset="utf-8">
+	<title>Programming Language Database</title>
+	<!-- Load Plotly library -->
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script src="language.js"></script>
+	<script src="visuals_1.js"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-	<!-- Create a div to hold the plot -->
-	<div id="plot"></div>
+	<!--Top Title Section-->
+	<div id="top_title">
+		<h1>Programming Language Database</h1>
+		<h3>By: Bhuvana Krish, Daniel Yoon, Khevana Patel</h3>
+	</div>
 
-	<script>
-		fetch('data.json')
-		  .then(response => response.json())
-		  .then(data => {
-		  	// Filter and sort the data to get the top 10 programming languages based on rank
-		  	let topLanguages = data.filter(d => d.Rank <= 10)
-		  		.sort((a, b) => a.Rank - b.Rank);
-
-		  	// Extract the values from the filtered data
-		  	let programmingLanguages = topLanguages.map(d => d.Programming_Language);
-		  	let numberOfUsers = topLanguages.map(d => d.Number_Of_Users);
-		  	let numberOfJobs = topLanguages.map(d => d.Number_Of_Jobs);
-
-		  	// Create traces for the bar chart
-		  	let trace1 = {
-		  		x: programmingLanguages,
-		  		y: numberOfUsers,
-		  		name: 'Number of Users',
-		  		type: 'bar'
-		  	};
-
-		  	let trace2 = {
-		  		x: programmingLanguages,
-		  		y: numberOfJobs,
-		  		name: 'Number of Jobs',
-		  		type: 'bar'
-		  	};
-
-		  	// Create a layout for the plot
-		  	let layout = {
-		  		title: 'Top 10 Programming Languages',
-		  		barmode: 'group'
-		  	};
-
-		  	// Plot the data using Plotly
-		  	Plotly.newPlot('plot', [trace1, trace2], layout);
-		  })
-		  .catch(error => console.error(error));
-	</script>
-		
+	<!--Intro Container-->
+	<div id="first_container" data-aos="fade-right" data-aos-duration="2000">
+		<h2>Data Source: <a href="https://www.kaggle.com/datasets/sujaykapadnis/programming-language-database ">Kaggle</a><br><br><br><br><br><br>
+			<ul id="first_text">
+				<li>Dataset contains information on over 4000 programming languages</li><br><br><br>
+				<li>Dataset is summarized by: # of Users, Year it was created, # of Jobs</li>
+			</ul>
+		</h2>
+		<img src="https://miro.medium.com/v2/resize:fit:800/1*wcEYa9AjnMZxXAau2iuhYw.png" height="600px">
+	</div>
 	
+	<!--Second Container-->
+	<div id="second_container" data-aos="fade-left" data-aos-duration="2000">
+		<h1 id="second_header">Top 10 Languages Sorted by # of Users</h1>
+		<!-- Create a div to hold the plot -->
+		<div id="plot"></div>
+	</div>
+
+
+	<div id="third_container" data-aos="fade-right" data-aos-duration="2000">
+		<h1 id="third_header">Discover Programming Languages by Created Year</h1>
+		<div id="visuals_1">
+			<h2>Select a year:</h2>
+			<h4>Displays Programming Languages that have more than 0 Users AND 0 Number of Jobs</h4>
+
+			<select id="year-dropdown"></select>
+
+			<div id="chart-languages" ></div>
+			<h5 id="total-languages"></h5>
+			<h5 id="total-languages-filtered"></h5>
+
+			<div id="chart-users"></div>
+			<h5 id="total-users"></h5>
+
+			<div id="chart-jobs"></div>
+			<h5 id="total-jobs"></h5>
+		</div>
+	</div>
 </body>
+
+<script>
+	AOS.init()
+</script>
 </html>
